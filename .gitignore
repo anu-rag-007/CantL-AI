@@ -1,0 +1,21 @@
+# Ignore Python virtual environment
+venv/
+__pycache__/
+*.pyc
+
+# Ignore IDE files
+.idea/
+*.iml
+
+# Ignore node modules (if any)
+node_modules/
+
+# Ignore build artifacts
+build/
+Dist/
+dist/
+*.egg-info/
+
+# Android specific
+*.apk
+*.ap_
