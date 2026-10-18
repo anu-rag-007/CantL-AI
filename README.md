@@ -17,7 +17,7 @@ CantL‑AI is an open‑source, multi‑platform fact‑checking assistant that 
 1. **Open the project folder** `d:/Practice set/CantL-AI`.
 2. **Backend** – create a virtual environment, install dependencies, and run the server:
    ```powershell
-   cd "d:/Practice set/CantL-AI"
+   cd "D:/CantL-AI"
    python -m venv venv
    .\venv\Scripts\activate
    pip install -r requirements.txt
