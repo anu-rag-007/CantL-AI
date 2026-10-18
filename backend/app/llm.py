@@ -1,6 +1,6 @@
 import os
 import json
-import google.generativeai as genai
+from google import genai   
 
 # Initialise the Gemini client once
 api_key = os.getenv("GEMINI_API_KEY")

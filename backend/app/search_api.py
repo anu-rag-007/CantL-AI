@@ -29,3 +29,11 @@ def search_web(query: str, top_n: int = 5):
         if snippet:
             snippets.append(snippet)
     return snippets
+
+    try:
+        resp = requests.get(endpoint, headers=headers, params=params, timeout=10)
+        resp.raise_for_status()
+        data = resp.json()
+    except requests.exceptions.RequestException as e:
+        print(f"Bing Search failed: {e}")
+        return [] # Return empty so the pipeline continues
