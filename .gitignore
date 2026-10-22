@@ -19,3 +19,6 @@ dist/
 # Android specific
 *.apk
 *.ap_
+
+# Ignore Environment files
+*.env
