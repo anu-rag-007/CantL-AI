@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8" />
-  <title>CantL-AI Fact Checker</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <div id="container">
-    <h1>CantL-AI</h1>
-    <button id="checkBtn">Check this post</button>
-    <div id="result"></div>
+  <div class="container">
+    <h2>CantL-AI</h2>
+    <textarea id="claimInput" placeholder="Paste a claim here or select text on a page..."></textarea>
+    <button id="checkBtn">Fact Check</button>
+    
+    <div id="resultBox" class="hidden">
+      <h3>Verdict</h3>
+      <p id="scoreDisplay">--% Truthful</p>
+    </div>
   </div>
   <script src="popup.js"></script>
 </body>

@@ -18,5 +18,11 @@ async def fact_check_claim(claim: str):
     # 3. LLM evaluation (returns a probability between 0 and 1)
     llm_score = await asyncio.to_thread(evaluate_claim, claim, snippets)
     # 4. Simple weighted average (adjust weights as needed)
-    truthfulness = 0.6 * llm_score + 0.4 * trust_score
+    if not snippets:
+        truthfulness = llm_score
+    else:
+        truthfulness = 0.6 * llm_score + 0.4 * trust_score
+        
     return {"truthfulness": truthfulness, "llm_score": llm_score, "trust_score": trust_score, "snippets": snippets}
+
+   

@@ -1,45 +1,62 @@
 import os
-import json
-from google import genai   
+from dotenv import load_dotenv
+from google import genai
+from google.genai import types
 
-# Initialise the Gemini client once
+# Load environment variables
+load_dotenv()
+
+# Initialize the new, unified client
 api_key = os.getenv("GEMINI_API_KEY")
-if not api_key:
-    raise RuntimeError("GEMINI_API_KEY environment variable not set")
-genai.configure(api_key=api_key)
+client = None
 
-model = genai.GenerativeModel("gemini-3.1-flash-lite")  
+if api_key:
+    # The new SDK automatically picks up the key if passed here
+    client = genai.Client(api_key=api_key)
+    print("✅ GenAI Client initialized successfully.")
+else:
+    print("❌ WARNING: Could not find GEMINI_API_KEY in the environment.")
+
 
 def evaluate_claim(claim: str, snippets: list[str]) -> float:
     """
-    Calls the Gemini model to assess the truthfulness of *claim* given the
-    collected *snippets* (search results).
-
-    Returns a probability between 0 and 1 where higher means more likely true.
+    Calls the Gemini model using the new GenAI SDK.
+    If no client is initialized, returns a dummy score of 0.5.
     """
-    # Build a prompt that asks the model to judge the claim.
+    if not client:
+        print("⚠️ No GEMINI_API_KEY found. Using dummy scorer (0.5).")
+        return 0.5
+
     prompt = (
         "You are a fact‑checking assistant. "
         "Given the following evidence snippets, decide whether the claim is true, false, or mixed. "
         "Return ONLY a single number between 0 (definitely false) and 1 (definitely true). "
         "\n\n"
         f"Claim: {claim}\n\n"
-        "Evidence:\n" + "\n".join(f"- {s}" for s in snippets[:5])  # limit length
+        "Evidence:\n" + "\n".join(f"- {s}" for s in snippets[:5])
         + "\n\nAnswer:"
     )
 
-    # Call Gemini (blocking; can be wrapped in a thread if you prefer async)
-    response = model.generate_content(prompt)
-
-    # The model returns text; try to extract a float.
     try:
-        # Strip any surrounding whitespace / newlines
+        # The new SDK uses client.models.generate_content
+        response = client.models.generate_content(
+            model='gemini-3.8-flash',  # A modern, fast model
+            contents=prompt,
+            # Use types.GenerateContentConfig for advanced settings if needed
+            config=types.GenerateContentConfig(
+                temperature=0.0,  # Low temperature for more deterministic answers
+            )
+        )
+        
+        # Extract the text from the response
         text = response.text.strip()
-        # Keep only the first number we can parse
+        
+        # Parse the first number from the text
         score = float(text.split()[0])
-        # Clamp to [0, 1]
+        
+        # Clamp the score to ensure it's between 0 and 1
         return max(0.0, min(1.0, score))
+        
     except Exception as e:
-        # If parsing fails, fall back to a neutral score
-        print(f"Gemini parsing error: {e!r}. Raw response: {response.text!r}")
+        print(f"Gemini parsing error: {e!r}")
         return 0.5
