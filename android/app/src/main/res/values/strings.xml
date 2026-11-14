@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CantL-AI</string>
+    <string name="fact_check">Fact Check</string>
+    <string name="start_floating_bubble">Start Floating Bubble</string>
+    <string name="allow_overlay_permission">Please allow Display over other apps</string>
+</resources>
