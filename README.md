@@ -1,4 +1,4 @@
-CantL-AI — AI-Powered Fact-Checking Assistant
+CantL-AI is an AI-Powered Fact-Checking Assistant. 
 
 «Question misinformation. Verify claims. Make informed decisions.»
 
