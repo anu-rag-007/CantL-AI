@@ -6,7 +6,7 @@ CantL-AI is an open-source, multi-platform fact-checking assistant designed to h
 
 With a browser extension, a FastAPI backend, and an Android application, CantL-AI brings fact-checking closer to where people consume information.
 
-✨ Features
+✨ FEATURES
 
 - One-Click Fact-Checking: Evaluate claims from social media platforms, including Instagram, Facebook, and X (formerly Twitter).
 - AI-Assisted Analysis: Integrates Google Gemini for claim evaluation when an API key is configured.
